@@ -97,11 +97,15 @@ async def update_names(ctx):
                         color=discord.Color.blue())
 
   # Add fields to the embed
-  for category, names in names_data.items():
-    if category == "names":
-      embed.add_field(name="Names", value='\n'.join(names), inline=False)
-    elif category == "discord":
-      embed.add_field(name="Discord", value='\n'.join(names), inline=False)
+  names_list = []
+  discord_list = []
+  
+  for person in names_data:
+    names_list.append(person["name"])
+    discord_list.append(person["discord"])
+  
+  embed.add_field(name="Names", value='\n'.join(names_list), inline=True)
+  embed.add_field(name="Discord", value='\n'.join(discord_list), inline=True)
 
   # Send the embed to the channel
   await channel.send(embed=embed)
