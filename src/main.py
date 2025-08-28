@@ -66,6 +66,7 @@ async def ping(ctx):
 @commands.has_role(admin_role or mod_role or trial_admin_role
                    or trial_mod_role)
 async def update_names(ctx):
+  await ctx.send("Success, wait for embed to update")
   channel = bot.get_channel(names_channel)
   try:
     deleted = await channel.purge(limit=None)
