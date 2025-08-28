@@ -93,17 +93,17 @@ async def update_names(ctx):
 
   # Create the embed
   embed = discord.Embed(title="Names",
-                        description="List of names:",
-                        color=discord.Color.blue())
+  description="List of names:",
+  color=discord.Color.blue())
 
   # Add fields to the embed
   names_list = []
   discord_list = []
-  
+
   for person in names_data:
     names_list.append(person["name"])
     discord_list.append(person["discord"])
-  
+
   embed.add_field(name="Names", value='\n'.join(names_list), inline=True)
   embed.add_field(name="Discord", value='\n'.join(discord_list), inline=True)
 
