@@ -82,7 +82,7 @@ async def update_names(ctx):
   # Load names data from JSON file
   try:
     import json
-    with open('src/data/names.json', 'r') as f:
+    with open('src/names.json', 'r') as f:
       names_data = json.load(f)
   except FileNotFoundError:
     await ctx.send("Error: names.json file not found in the data directory.")
@@ -94,8 +94,8 @@ async def update_names(ctx):
 
   # Create the embed
   embed = discord.Embed(title="Names",
-  description="List of names:",
-  color=discord.Color.blue())
+                        description="List of names:",
+                        color=discord.Color.blue())
 
   # Add fields to the embed
   names_list = []
