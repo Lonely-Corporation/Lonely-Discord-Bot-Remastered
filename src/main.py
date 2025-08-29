@@ -68,28 +68,47 @@ async def ping(ctx):
 async def update_names(ctx):
   await ctx.send("Success, wait for embed to update")
   channel = bot.get_channel(names_channel)
+  debug_channel_var = bot.get_channel(debug_channel)
+  now = datetime.now()
   try:
     deleted = await channel.purge(limit=None)
     print(
         f"Successfully deleted {len(deleted)} messages from channel {channel.name}."
     )
+    await debug_channel_var.send(
+        f"`Successfully deleted {len(deleted)} messages from channel {channel.name}.` at <t:{int(now.timestamp())}:F>"
+    )
   except discord.Forbidden:
     print(
         f"I don't have the permissions to delete messages in {channel.name}.")
+    await debug_channel_var.send(
+        f"`I don't have the permissions to delete messages in {channel.name}.` at <t:{int(now.timestamp())}:F>"
+    )
   except Exception as e:
     print(f"An error occurred while purging channel {channel.name}: {e}")
+    await debug_channel_var.send(
+        f"`An error occurred while purging channel {channel.name}: {e}` at <t:{int(now.timestamp())}:F>"
+    )
 
   # Load names data from JSON file
   try:
     import json
     with open('src/names.json', 'r') as f:
       names_data = json.load(f)
+    await debug_channel_var.send(
+        f"`Successfully loaded names.json` at <t:{int(now.timestamp())}:F>")
   except FileNotFoundError:
     await ctx.send("Error: names.json file not found in the data directory.")
+    await debug_channel_var.send(
+        f"`Error: names.json file not found in the data directory.` at <t:{int(now.timestamp())}:F>"
+    )
     return
   except json.JSONDecodeError:
     await ctx.send(
         "Error: Could not decode names.json.  Please ensure it is valid JSON.")
+    await debug_channel_var.send(
+        f"`Error: Could not decode names.json.  Please ensure it is valid JSON.` at <t:{int(now.timestamp())}:F>"
+    )
     return
 
   # Create the embed
@@ -110,6 +129,8 @@ async def update_names(ctx):
 
   # Send the embed to the channel
   await channel.send(embed=embed)
+  await debug_channel_var.send(
+      f"`Successfully sent names embed` at <t:{int(now.timestamp())}:F>")
 
 
 bot.run(TOKEN)
