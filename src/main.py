@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from discord import app_commands, embeds
+from discord import app_commands, embeds, welcome_screen
 import os
 from dotenv import load_dotenv
 from datetime import datetime
@@ -11,6 +11,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 #channels
 debug_channel = 1410524616556023821
 names_channel = 1395392815436922901
+joins_channel = 1360914391028989998
 
 #roles
 admin_role = 1361116157125333002
@@ -132,5 +133,13 @@ async def update_names(ctx):
   await debug_channel_var.send(
       f"`Successfully sent names embed` at <t:{int(now.timestamp())}:F>")
 
+@bot.event
+async def on_member_join(member):
+  channel = bot.get_channel(joins_channel)
+  await channel.send(f"Welcome {member.mention} to the server! /n You are member number {member.guild.member_count} /n Head to <#1360041654832205854> to get started!")
 
+  #debug messages
+  debug_channel = bot.get_channel(debug_channel)
+  await debug_channel.send(f"`logged {member.mention} join` at <t:{int(now.timestamp())}:F>"
+  )
 bot.run(TOKEN)
