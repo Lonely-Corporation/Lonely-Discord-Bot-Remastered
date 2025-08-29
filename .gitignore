@@ -1,2 +1,2 @@
 .env
-src/data/names/json
+src/data/names.json
